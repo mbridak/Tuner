@@ -27,6 +27,11 @@ color: rgb(211, 215, 207);</string>
       <height>18</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>JetBrains Mono</family>
+     </font>
+    </property>
     <property name="text">
      <string>Freq:</string>
     </property>
@@ -39,6 +44,11 @@ color: rgb(211, 215, 207);</string>
       <width>71</width>
       <height>18</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>JetBrains Mono</family>
+     </font>
     </property>
     <property name="text">
      <string>00000000</string>
@@ -53,6 +63,11 @@ color: rgb(211, 215, 207);</string>
       <height>18</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>JetBrains Mono</family>
+     </font>
+    </property>
     <property name="text">
      <string>Mode:</string>
     </property>
@@ -65,6 +80,11 @@ color: rgb(211, 215, 207);</string>
       <width>40</width>
       <height>18</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>JetBrains Mono</family>
+     </font>
     </property>
     <property name="text">
      <string>XXX</string>
@@ -79,6 +99,11 @@ color: rgb(211, 215, 207);</string>
       <height>18</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>JetBrains Mono</family>
+     </font>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -91,6 +116,11 @@ color: rgb(211, 215, 207);</string>
       <width>61</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>JetBrains Mono</family>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{background-color: green;}

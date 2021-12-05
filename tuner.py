@@ -1,9 +1,29 @@
 #!/usr/bin/python3
 
+import logging
+logging.basicConfig(level=logging.WARNING)
+
 import socket, os, sys
 from typing import final
 from PyQt5 import QtCore, QtWidgets, uic
 from telnetlib import Telnet
+from PyQt5.QtCore import QDir
+from PyQt5.QtGui import QFontDatabase
+
+def relpath(filename):
+		try:
+			base_path = sys._MEIPASS # pylint: disable=no-member
+		except:
+			base_path = os.path.abspath(".")
+		return os.path.join(base_path, filename)
+
+def load_fonts_from_dir(directory):
+		families = set()
+		for fi in QDir(directory).entryInfoList(["*.ttf", "*.woff", "*.woff2"]):
+			_id = QFontDatabase.addApplicationFont(fi.absoluteFilePath())
+			families |= set(QFontDatabase.applicationFontFamilies(_id))
+		return families
+
 
 class MainWindow(QtWidgets.QMainWindow):
     oldfreq = ''
@@ -154,6 +174,9 @@ class MainWindow(QtWidgets.QMainWindow):
 def main():
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
+    font_dir = relpath("font")
+    families = load_fonts_from_dir(os.fspath(font_dir))
+    logging.info(families)
     window = MainWindow()
     window.show()
     timer = QtCore.QTimer()
