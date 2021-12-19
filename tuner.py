@@ -3,10 +3,10 @@
 import logging
 logging.basicConfig(level=logging.WARNING)
 
-import socket, os, sys
+import xmlrpc.client
+import os, sys
 from typing import final
 from PyQt5 import QtCore, QtWidgets, uic
-from telnetlib import Telnet
 from PyQt5.QtCore import QDir
 from PyQt5.QtGui import QFontDatabase
 
@@ -54,6 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.oldfreq, self.oldmode, self.oldbw = self.getCurrentRadioState()
         self.freq_label.setText(self.oldfreq)
         self.mode_label.setText(self.oldmode)
+        self.server = xmlrpc.client.ServerProxy("http://localhost:12345")
 
     def relpath(self, filename):
         """
@@ -68,39 +69,33 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def getCurrentRadioState(self):
         try:
-            with Telnet(self.settings_dict['host'], self.settings_dict['port'],3) as tn:
-                tn.write(b'f\n')
-                freq = tn.read_some().decode('ascii').strip()
-                tn.write(b'm\n')
-                nm = tn.read_some().decode('ascii').strip()
-                mode, bw = nm.strip().split()
-                self.errorline_label.setText("")
-                return freq, mode, bw
+            freq = self.server.rig.get_vfo()
+            mode = self.server.rig.get_mode()
+            bw = self.server.rig.get_bw()[0]
+            self.errorline_label.setText("")
+            logging.info(f"getCurrentRadioState:{freq} {mode} {bw}")
+            return freq, mode, bw
         except Exception as e:
             self.errorline_label.setText(f"{e}")
             return "0000000", "ERR", "0"
 
     def changefreq(self, tunefreq):
+        logging.info(f"changefreq: {tunefreq}")
         try:
-            with Telnet(self.settings_dict['host'], self.settings_dict['port'],3) as tn:
-                cmd = f"F {tunefreq}\n"
-                tn.write(cmd.encode('ascii'))
-                _=tn.read_some()
+            self.server.rig.set_frequency(float(tunefreq))
         except Exception as e:
             self.errorline_label.setText(f"{e}")
             return
 
     def changemode(self, isft8):
+        logging.info(f"changemode:{isft8}")
         try:
-            with Telnet(self.settings_dict['host'], self.settings_dict['port'],3) as tn:
-                if isft8:
-                    cmd = "M CW 500\n".encode('ascii')
-                    tn.write(cmd)
-                    _=tn.read_some()
-                    return
-                cmd = f"M {self.oldmode} {self.oldbw}\n".encode('ascii')
-                tn.write(cmd)
-                _=tn.read_some()
+            if isft8:
+                self.server.rig.set_mode("CW")
+                self.server.rig.set_bw(int(500))
+                return
+            self.server.rig.set_mode(self.oldmode)
+            self.server.rig.set_bandwidth(int(self.oldbw))
         except Exception as e:
             self.errorline_label.setText(f"{e}")
             return

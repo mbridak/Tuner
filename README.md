@@ -6,11 +6,19 @@
 ## What is it. Why is it...
 
 This is a scratch my own itch project. I use [potato](https://github.com/mbridak/potato) for [POTA](https://pota.app/#/) hunting, and [sotacracker](https://github.com/mbridak/sotacracker) for chasing [SOTA](https://www.sota.org.uk/).
-So when I click on an activation in one of those apps, my radio will be changed to the new band/mode, and on the spotted frequency using [rigctld](https://manpages.ubuntu.com/manpages/precise/man8/rigctld.8.html). 
+So when I click on an activation in one of those apps, my radio will be changed to the new band/mode, and on the spotted frequency using [flrig](http://w1hkj.com/files/flrig/) 
 
 One does not want to tune up on top of an activator. So, I made this little app. What it does is, when you press the tune button, it remembers what frequency and mode you are currently on. Then it tunes the radio away to a fairly safe frequency, away from the activator. Which, just coincidentally, happens to be the start of the FT8 window for that band:fire:. No one uses that anyways...
 Switches your mode to CW, so you can key down to initiate a tune cycle, or press the tune button on your rig/tuner.
 Once the tune cycle is complete, you press the tune button again, and the radio is changed back to the original activation frequency and mode you started on:beers:.
+
+## Changes since 21.12.13 Flaming Hot Cheeto
+
+I ditched using the rigctld daemon supplied by hamlib tools. Instead I'll be using the [flrig's](http://w1hkj.com/files/flrig/) XmlRPC interface. It's way simpler. It's available on all platforms.
+
+For Debian based Linux or Raspberry OS you can:
+
+`sudo apt install flrig`
 
 ## Running from source
 
