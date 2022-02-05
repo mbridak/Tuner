@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=tuner
+StartupWMClass=tuner
+GenericName=K6GTE tuner
+Comment=Amateur Radio Communications
+Exec=tuner
+Icon=k6gte-tuner
+Terminal=false
+Type=Application
+Categories=HamRadio;
