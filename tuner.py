@@ -151,6 +151,9 @@ class MainWindow(QtWidgets.QMainWindow):
             freq, mode, _ = self.getCurrentRadioState()
             self.freq_label.setText(freq)
             self.mode_label.setText(mode)
+        info = self.server.rig.get_info()
+        if "R:IC-7300" in info:
+            self.server.rig.cat_string("xFExFEx94xE0x1Cx01x02xFD")
 
 
     def doneTuning(self):
